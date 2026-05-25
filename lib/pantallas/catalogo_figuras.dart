@@ -46,78 +46,171 @@ class CatalogoFiguras extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
-        title: Text("Catálogo de Figuras"),
+        title: const Text("Catálogo de Figuras"),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Text("Figuras Planas"),
-          
-          
-            const SizedBox(height: 20),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
 
-              itemCount: figurasPlanas.length,
+      body: Container(
 
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 15.0,
-                mainAxisSpacing: 10.0,
-                childAspectRatio: 0.9,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFEAF6FF),
+              Color(0xFFB3E5FC),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(15),
+
+          child: Column(
+            children: [
+
+              const SizedBox(height: 10),
+
+              const Text(
+                "Figuras Geométricas",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1565C0),
+                ),
               ),
 
-              itemBuilder: (context, index) {
-                final figura = figurasPlanas[index];
+              const SizedBox(height: 8),
 
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Calculadora(
-                          nombreFigura: figura['nombre']!,
-                          imagenFigura: figura['imagen']!,
+              const Text(
+                "Selecciona una figura",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black54,
+                ),
+              ),
+
+              const SizedBox(height: 25),
+
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+
+                itemCount: figurasPlanas.length,
+
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 15,
+                  childAspectRatio: 0.85,
+                ),
+
+                itemBuilder: (context, index) {
+
+                  final figura = figurasPlanas[index];
+
+                  return GestureDetector(
+
+                    onTap: () {
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Calculadora(
+                            nombreFigura: figura['nombre']!,
+                            imagenFigura: figura['imagen']!,
+                          ),
+                        ),
+                      );
+
+                    },
+
+                    child: Card(
+                      elevation: 8,
+
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+
+                      child: Container(
+
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(25),
+
+                          gradient: const LinearGradient(
+                            colors: [
+                              Colors.white,
+                              Color(0xFFE3F2FD),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+
+                          child: Column(
+                            mainAxisAlignment:
+                                MainAxisAlignment.center,
+
+                            children: [
+
+                              Container(
+                                padding:
+                                    const EdgeInsets.all(10),
+
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.circular(20),
+
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 8,
+                                      offset: Offset(0,4),
+                                    )
+                                  ],
+                                ),
+
+                                child: Image.asset(
+                                  figura['imagen']!,
+                                  height: 70,
+                                ),
+                              ),
+
+                              const SizedBox(height: 15),
+
+                              Text(
+                                figura['nombre']!,
+                                textAlign: TextAlign.center,
+
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight:
+                                      FontWeight.bold,
+                                  color:
+                                      Color(0xFF1565C0),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    );
-                  },
-                  child: Card(
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            figura['imagen']!,
-                            height: 80,
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            figura['nombre']!,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
+                  );
+                },
+              ),
+
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
   }
-
 }
