@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:geo_calc/utils/formulas.dart';
 
 class Calculadora extends StatefulWidget {
@@ -14,6 +14,9 @@ class _CalculadoraState extends State<Calculadora> {
 
   bool calcularArea = false;
   bool calcularPerimetro = false;
+
+  bool calcularVolumen = false;
+
 
   final ladoController = TextEditingController();
   final baseController = TextEditingController();
@@ -31,6 +34,7 @@ class _CalculadoraState extends State<Calculadora> {
 
   String resultadoArea = "";
   String resultadoPerimetro = "";
+  String resultadoVolumen = "";
 
   @override
   void dispose() {
@@ -53,6 +57,18 @@ class _CalculadoraState extends State<Calculadora> {
   double obtenerNumero(TextEditingController controller) {
     return double.tryParse(controller.text) ?? 0;
   }
+
+  InputDecoration estiloCampo(String texto){
+  return InputDecoration(
+    labelText: texto,
+    filled: true,
+    fillColor: Colors.white,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: BorderSide.none,
+    ),
+  );
+}
 
   void calcularResultados() {
     double area = 0;
@@ -177,6 +193,52 @@ class _CalculadoraState extends State<Calculadora> {
         break;
         
     }
+
+    if (calcularVolumen) {
+      switch (widget.nombreFigura) {
+
+        case 'Cubo':
+          double lado = obtenerNumero(ladoController);
+          resultadoVolumen =
+              "Volumen: ${Formulas.calcularVolumenCubo(lado).toStringAsFixed(2)}";
+          break;
+
+        case 'Esfera':
+          double radio = obtenerNumero(radioController);
+          resultadoVolumen =
+              "Volumen: ${Formulas.calcularVolumenEsfera(radio).toStringAsFixed(2)}";
+          break;
+
+        case 'Cilindro':
+          double radio = obtenerNumero(radioController);
+          double altura = obtenerNumero(alturaController);
+          resultadoVolumen =
+              "Volumen: ${Formulas.calcularVolumenCilindro(radio, altura).toStringAsFixed(2)}";
+          break;
+
+        case 'Cono':
+          double radio = obtenerNumero(radioController);
+          double altura = obtenerNumero(alturaController);
+          resultadoVolumen =
+              "Volumen: ${Formulas.calcularVolumenCono(radio, altura).toStringAsFixed(2)}";
+          break;
+
+        case 'Prisma':
+          double largo = obtenerNumero(baseController);
+          double ancho = obtenerNumero(lado1Controller);
+          double altura = obtenerNumero(alturaController);
+          resultadoVolumen =
+              "Volumen: ${Formulas.calcularVolumenPrisma(largo, ancho, altura).toStringAsFixed(2)}";
+          break;
+
+        case 'Pirámide':
+          double areaBase = obtenerNumero(baseController);
+          double altura = obtenerNumero(alturaController);
+          resultadoVolumen =
+              "Volumen: ${Formulas.calcularVolumenPiramide(areaBase, altura).toStringAsFixed(2)}";
+          break;
+      }
+    }
     setState(() {});
   }
 
@@ -192,6 +254,20 @@ class _CalculadoraState extends State<Calculadora> {
     final esParalelogramo = widget.nombreFigura == 'Paralelogramo';
     final esPentagono = widget.nombreFigura == 'Pentágono';
     final esHexagono = widget.nombreFigura == 'Hexágono';
+
+    final esCubo = widget.nombreFigura=="Cubo";
+    final esCilindro = widget.nombreFigura=="Cilindro";
+    final esCono = widget.nombreFigura=="Cono";
+    final esEsfera = widget.nombreFigura=="Esfera";
+    final esPrisma = widget.nombreFigura=="Prisma";
+    final esPiramide = widget.nombreFigura=="Pirámide";
+
+    final esFiguraPlana = esCuadrado || esRectangulo || esTriangulo || 
+                         esCirculo || esTrapecio || esRombo || 
+                         esParalelogramo || esPentagono || esHexagono;
+  
+    final esCuerpoGeometrico = esCubo || esCilindro || esCono || 
+                              esEsfera || esPrisma || esPiramide;
 
 
     return Scaffold(
@@ -240,59 +316,148 @@ class _CalculadoraState extends State<Calculadora> {
               },
             ),
 
+            // SOLO mostrar checkbox de Volumen si es un cuerpo geométrico
+          if (esCuerpoGeometrico)
+            CheckboxListTile(
+              title: const Text("Volumen"),
+              value: calcularVolumen,
+              onChanged: (value) {
+                if(!value! && !calcularArea && !calcularPerimetro){
+                  return;
+                }
+                setState(() {
+                  calcularVolumen = value!;
+                  resultadoVolumen = "";
+                });
+              },
+            ),
+          
+          //Si es figura plana, mostrar un mensaje o simplemente no mostrar nada
+          if (esFiguraPlana)
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, top: 4.0),
+              child: Text(
+                "ℹ️ Las figuras planas no tienen volumen",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey[600],
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+
             const SizedBox(height: 20),
 
-            if (esCuadrado || esRombo || esPentagono || esHexagono)
-              TextField(
-                controller: ladoController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Lado',
-                  border: OutlineInputBorder(),
+            // ===== LADO =====
+            if (
+              esCuadrado ||
+              esRombo ||
+              esPentagono ||
+              esHexagono ||
+              (esCubo && calcularVolumen)
+            )
+            TextField(
+              controller: ladoController,
+              keyboardType: TextInputType.number,
+              decoration: estiloCampo("Lado"),
+            ),
+
+            const SizedBox(height:15),
+
+            // ===== BASE =====
+            if (
+              esRectangulo ||
+              esTriangulo ||
+              esParalelogramo
+            )
+            TextField(
+              controller: baseController,
+              keyboardType: TextInputType.number,
+              decoration: estiloCampo("Base"),
+            ),
+
+            const SizedBox(height:15),
+
+            // ===== ALTURA =====
+            if (
+
+            ((esRectangulo ||
+            esTriangulo ||
+            esTrapecio ||
+            esParalelogramo) &&
+            calcularArea)
+
+            ||
+
+            ((esCilindro ||
+            esCono ||
+            esPrisma ||
+            esPiramide) &&
+            calcularVolumen)
+
+            )
+
+            TextField(
+              controller: alturaController,
+              keyboardType: TextInputType.number,
+              decoration: estiloCampo("Altura"),
+            ),
+
+            const SizedBox(height:15),
+
+            // ===== RADIO =====
+            if (
+
+            esCirculo ||
+
+            ((esEsfera ||
+            esCilindro ||
+            esCono) &&
+            calcularVolumen)
+
+            )
+
+            TextField(
+              controller: radioController,
+              keyboardType: TextInputType.number,
+              decoration: estiloCampo("Radio"),
+            ),
+
+            const SizedBox(height:15),
+
+            // ===== PRISMA =====
+            if (esPrisma && calcularVolumen)
+            Column(
+              children: [
+
+                TextField(
+                  controller: baseController,
+                  keyboardType: TextInputType.number,
+                  decoration: estiloCampo("Largo"),
                 ),
-              ),
 
-            const SizedBox(height: 15),
+                const SizedBox(height:15),
 
-            if (esRectangulo || esTriangulo || esParalelogramo)
-              TextField(
-                controller: baseController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Base',
-                  border: OutlineInputBorder(),
+                TextField(
+                  controller: lado1Controller,
+                  keyboardType: TextInputType.number,
+                  decoration: estiloCampo("Ancho"),
                 ),
-              ),
 
-            const SizedBox(height: 15),
+              ],
+            ),
 
-            if ((esRectangulo ||
-                    esTriangulo ||
-                    esTrapecio ||
-                    esParalelogramo) &&
-                calcularArea)
-              TextField(
-                controller: alturaController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Altura',
-                  border: OutlineInputBorder(),
-                ),
-              ),
+            const SizedBox(height:15),
 
-            const SizedBox(height: 15),
+            // ===== PIRÁMIDE =====
+            if (esPiramide && calcularVolumen)
+            TextField(
+              controller: baseController,
+              keyboardType: TextInputType.number,
+              decoration: estiloCampo("Área base"),
+            ),
 
-            if (esCirculo)
-              TextField(
-                controller: radioController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Radio',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-
-            const SizedBox(height: 15),
+            const SizedBox(height:15),
 
             if (esTrapecio)
               Column(
@@ -489,6 +654,19 @@ class _CalculadoraState extends State<Calculadora> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
+              const SizedBox(height:10),
+
+            if(resultadoVolumen.isNotEmpty)
+            Text(
+              resultadoVolumen,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
 
           ],
         ),

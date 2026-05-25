@@ -43,16 +43,40 @@ class CatalogoFiguras extends StatelessWidget {
     }
   ];
 
+  final cuerposGeometricos = [
+    {
+      'nombre':'Cubo',
+      'imagen':'assets/images/cubo.jpg'
+    },
+    {
+      'nombre':'Cilindro',
+      'imagen':'assets/images/cilindro.png'
+    },
+    {
+      'nombre':'Cono',
+      'imagen':'assets/images/cono.png'
+    },
+    {
+      'nombre':'Esfera',
+      'imagen':'assets/images/esfera.jpg'
+    },
+    {
+      'nombre':'Prisma',
+      'imagen':'assets/images/prisma.jpg'
+    },
+    {
+      'nombre':'Pirámide',
+      'imagen':'assets/images/piramide.jpg'
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         title: const Text("Catálogo de Figuras"),
       ),
-
       body: Container(
-
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -63,15 +87,11 @@ class CatalogoFiguras extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(15),
-
           child: Column(
             children: [
-
               const SizedBox(height: 10),
-
               const Text(
                 "Figuras Geométricas",
                 style: TextStyle(
@@ -80,9 +100,7 @@ class CatalogoFiguras extends StatelessWidget {
                   color: Color(0xFF1565C0),
                 ),
               ),
-
               const SizedBox(height: 8),
-
               const Text(
                 "Selecciona una figura",
                 style: TextStyle(
@@ -90,31 +108,33 @@ class CatalogoFiguras extends StatelessWidget {
                   color: Colors.black54,
                 ),
               ),
-
               const SizedBox(height: 25),
+
+              // SECCIÓN DE FIGURAS PLANAS
+              const Text(
+                "Figuras Planas",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1565C0),
+                ),
+              ),
+              const SizedBox(height: 15),
 
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-
                 itemCount: figurasPlanas.length,
-
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 15,
                   childAspectRatio: 0.85,
                 ),
-
                 itemBuilder: (context, index) {
-
                   final figura = figurasPlanas[index];
-
                   return GestureDetector(
-
                     onTap: () {
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -124,22 +144,15 @@ class CatalogoFiguras extends StatelessWidget {
                           ),
                         ),
                       );
-
                     },
-
                     child: Card(
                       elevation: 8,
-
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
-
                       child: Container(
-
                         decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(25),
-
+                          borderRadius: BorderRadius.circular(25),
                           gradient: const LinearGradient(
                             colors: [
                               Colors.white,
@@ -149,25 +162,16 @@ class CatalogoFiguras extends StatelessWidget {
                             end: Alignment.bottomRight,
                           ),
                         ),
-
                         child: Padding(
                           padding: const EdgeInsets.all(12),
-
                           child: Column(
-                            mainAxisAlignment:
-                                MainAxisAlignment.center,
-
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-
                               Container(
-                                padding:
-                                    const EdgeInsets.all(10),
-
+                                padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.circular(20),
-
+                                  borderRadius: BorderRadius.circular(20),
                                   boxShadow: const [
                                     BoxShadow(
                                       color: Colors.black12,
@@ -176,25 +180,115 @@ class CatalogoFiguras extends StatelessWidget {
                                     )
                                   ],
                                 ),
-
                                 child: Image.asset(
                                   figura['imagen']!,
                                   height: 70,
                                 ),
                               ),
-
                               const SizedBox(height: 15),
-
                               Text(
                                 figura['nombre']!,
                                 textAlign: TextAlign.center,
-
                                 style: const TextStyle(
                                   fontSize: 18,
-                                  fontWeight:
-                                      FontWeight.bold,
-                                  color:
-                                      Color(0xFF1565C0),
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF1565C0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 30),
+
+              // SECCIÓN DE CUERPOS GEOMÉTRICOS
+              const Text(
+                "Cuerpos Geométricos",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1565C0),
+                ),
+              ),
+              const SizedBox(height: 15),
+
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: cuerposGeometricos.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 15,
+                  childAspectRatio: 0.85,
+                ),
+                itemBuilder: (context, index) {
+                  final cuerpo = cuerposGeometricos[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Calculadora(
+                            nombreFigura: cuerpo['nombre']!,
+                            imagenFigura: cuerpo['imagen']!,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          gradient: const LinearGradient(
+                            colors: [
+                              Colors.white,
+                              Color(0xFFE8EAF6), // Color ligeramente diferente para distinguir
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 8,
+                                      offset: Offset(0,4),
+                                    )
+                                  ],
+                                ),
+                                child: Image.asset(
+                                  cuerpo['imagen']!,
+                                  height: 70,
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              Text(
+                                cuerpo['nombre']!,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF1565C0),
                                 ),
                               ),
                             ],

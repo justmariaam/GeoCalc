@@ -73,8 +73,29 @@ class Formulas {
     return 2 * (lado1 + lado2);
   }
 
+  static double calcularVolumenCubo(double lado) {
+    return lado * lado * lado;
+  }
 
+  static double calcularVolumenEsfera(double radio) {
+    return (4 / 3) * pi * pow(radio, 3);
+  }
 
+  static double calcularVolumenCilindro(double radio, double altura) {
+    return pi * pow(radio, 2) * altura;
+  }
+
+  static double calcularVolumenCono(double radio, double altura) {
+    return (pi * pow(radio, 2) * altura) / 3;
+  }
+
+  static double calcularVolumenPrisma(double largo, double ancho, double altura) {
+    return largo * ancho * altura;
+  }
+
+  static double calcularVolumenPiramide(double areaBase, double altura) {
+    return (areaBase * altura) / 3;
+  }
 
 }
 
