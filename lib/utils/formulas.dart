@@ -97,5 +97,29 @@ class Formulas {
     return (areaBase * altura) / 3;
   }
 
-}
+  static double calcularAreaRomboide(double base, double altura){
+    return base * altura;
+  }
 
+  static double calcularPerimetroRomboide(double base, double lado) {
+    return 2 * (base + lado);
+  }
+  
+  static double calcularAreaElipse(double ejeMayor, double ejeMenor) {
+    return 3.14159265359 * ejeMayor * ejeMenor;
+  }
+
+  static double calcularPerimetroElipse(double ejeMayor, double ejeMenor) {
+    double a = ejeMayor;
+    double b = ejeMenor;
+    double h = ((a - b) * (a - b)) / ((a + b) * (a + b));
+    double perimetro = pi * (a + b) * (1 + (3 * h) / (10 + sqrt(4 - 3 * h)));
+    return perimetro;
+  }
+  
+  static double calcularAreaOctagono(double lado) {
+    return 2 * (1 + sqrt(2)) * lado * lado;
+  }
+  
+  static double calcularPerimetroOctagono(double lado) => 8 * lado;
+}

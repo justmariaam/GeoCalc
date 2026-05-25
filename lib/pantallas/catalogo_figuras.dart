@@ -40,7 +40,19 @@ class CatalogoFiguras extends StatelessWidget {
     {
       'nombre': 'Hexágono',
       'imagen': 'assets/images/hexagono.jpg'
-    }
+    },
+    {
+      'nombre': 'Romboide',
+      'imagen': 'assets/images/romboide.jpg'
+    },
+    {
+      'nombre': 'Elipse',
+      'imagen': 'assets/images/elipse.jpg'
+    },
+    {
+      'nombre': 'Octágono',
+      'imagen': 'assets/images/octagono.jpg'
+    },
   ];
 
   final cuerposGeometricos = [
