@@ -407,9 +407,6 @@ class _CalculadoraState extends State<Calculadora> {
               title: const Text("Área", style: TextStyle(fontSize: 16)),
               value: calcularArea,
               onChanged: (value) {
-                if (value == false && !calcularPerimetro && !calcularVolumen) {
-                  return;
-                }
                 setState(() {
                   calcularArea = value ?? false;
                   resultadoArea = "";
@@ -423,9 +420,6 @@ class _CalculadoraState extends State<Calculadora> {
                 title: const Text("Perímetro", style: TextStyle(fontSize: 16)),
                 value: calcularPerimetro,
                 onChanged: (value) {
-                  if (value == false && !calcularArea && !calcularVolumen) {
-                    return;
-                  }
                   setState(() {
                     calcularPerimetro = value ?? false;
                     resultadoPerimetro = "";
@@ -439,9 +433,6 @@ class _CalculadoraState extends State<Calculadora> {
                 title: const Text("Volumen", style: TextStyle(fontSize: 16)),
                 value: calcularVolumen,
                 onChanged: (value) {
-                  if (value == false && !calcularArea && !calcularPerimetro) {
-                    return;
-                  }
                   setState(() {
                     calcularVolumen = value ?? false;
                     resultadoVolumen = "";
