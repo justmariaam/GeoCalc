@@ -192,22 +192,6 @@ class _CalculadoraState extends State<Calculadora> {
         }
         break;
 
-      case 'Romboide':
-        double base = obtenerNumero(baseController);
-        double altura = obtenerNumero(alturaController);
-        if(calcularArea){
-          area = Formulas.calcularAreaRomboide(base, altura);
-          resultadoArea = "Área: ${area.toStringAsFixed(2)}";
-        }
-        if(calcularPerimetro){
-          perimetro = Formulas.calcularPerimetroRomboide(
-            obtenerNumero(lado1Controller), 
-            obtenerNumero(lado2Controller)
-          );
-          resultadoPerimetro = "Perímetro: ${perimetro.toStringAsFixed(2)}";
-        }
-        break;
-
       case 'Elipse':
         double ejeMayor = obtenerNumero(diagonalMayorController);
         double ejeMenor = obtenerNumero(diagonalMenorController);
@@ -233,6 +217,53 @@ class _CalculadoraState extends State<Calculadora> {
         }
         break;
         
+            case 'Heptágono':
+        double lado = obtenerNumero(ladoController);
+        if(calcularArea){
+          area = Formulas.calcularAreaHeptagono(lado);
+          resultadoArea = "Área: ${area.toStringAsFixed(2)}";
+        }
+        if(calcularPerimetro){
+          perimetro = Formulas.calcularPerimetroHeptagono(lado);
+          resultadoPerimetro = "Perímetro: ${perimetro.toStringAsFixed(2)}";
+        }
+        break;
+
+      case 'Nonágono':
+        double lado = obtenerNumero(ladoController);
+        if(calcularArea){
+          area = Formulas.calcularAreaNonagono(lado);
+          resultadoArea = "Área: ${area.toStringAsFixed(2)}";
+        }
+        if(calcularPerimetro){
+          perimetro = Formulas.calcularPerimetroNonagono(lado);
+          resultadoPerimetro = "Perímetro: ${perimetro.toStringAsFixed(2)}";
+        }
+        break;
+
+      case 'Decágono':
+        double lado = obtenerNumero(ladoController);
+        if(calcularArea){
+          area = Formulas.calcularAreaDecagono(lado);
+          resultadoArea = "Área: ${area.toStringAsFixed(2)}";
+        }
+        if(calcularPerimetro){
+          perimetro = Formulas.calcularPerimetroDecagono(lado);
+          resultadoPerimetro = "Perímetro: ${perimetro.toStringAsFixed(2)}";
+        }
+        break;
+
+      case 'Dodecágono':
+        double lado = obtenerNumero(ladoController);
+        if(calcularArea){
+          area = Formulas.calcularAreaDodecagono(lado);
+          resultadoArea = "Área: ${area.toStringAsFixed(2)}";
+        }
+        if(calcularPerimetro){
+          perimetro = Formulas.calcularPerimetroDodecagono(lado);
+          resultadoPerimetro = "Perímetro: ${perimetro.toStringAsFixed(2)}";
+        }
+        break;
     }
 
     if (calcularVolumen) {
@@ -301,14 +332,18 @@ class _CalculadoraState extends State<Calculadora> {
     final esEsfera = widget.nombreFigura=="Esfera";
     final esPrisma = widget.nombreFigura=="Prisma";
     final esPiramide = widget.nombreFigura=="Pirámide";
-    final esFiguraPlana = esCuadrado || esRectangulo || esTriangulo || 
-                         esCirculo || esTrapecio || esRombo || 
-                         esParalelogramo || esPentagono || esHexagono; 
-    final esCuerpoGeometrico = esCubo || esCilindro || esCono || 
-                              esEsfera || esPrisma || esPiramide;
-    final esRomboide = widget.nombreFigura == 'Romboide';
     final esElipse = widget.nombreFigura == 'Elipse';
     final esOctagono = widget.nombreFigura == 'Octágono';
+    final esHeptagono = widget.nombreFigura == 'Heptágono';
+    final esNonagono = widget.nombreFigura == 'Nonágono';
+    final esDecagono = widget.nombreFigura == 'Decágono';
+    final esDodecagono = widget.nombreFigura == 'Dodecágono';
+    final esFiguraPlana = esCuadrado || esRectangulo || esTriangulo ||
+    esCirculo ||  esTrapecio ||  esRombo ||  esParalelogramo ||  esPentagono ||
+    esHexagono ||  esOctagono || esHeptagono ||  esNonagono ||  esDecagono ||
+    esDodecagono ||  esElipse; 
+    final esCuerpoGeometrico = esCubo || esCilindro || esCono || 
+                              esEsfera || esPrisma || esPiramide;
 
     return Scaffold(
       appBar: AppBar(
@@ -389,23 +424,7 @@ class _CalculadoraState extends State<Calculadora> {
               ),
             ),
 
-            const SizedBox(height: 20),
-
-            // ===== LADO =====
-            if (
-              esCuadrado ||
-              esRombo ||
-              esPentagono ||
-              esHexagono ||
-              (esCubo && calcularVolumen)
-            )
-            TextField(
-              controller: ladoController,
-              keyboardType: TextInputType.number,
-              decoration: estiloCampo("Lado"),
-            ),
-
-            const SizedBox(height:15),
+           const SizedBox(height:15),
 
             // ===== BASE =====
             if (
@@ -488,33 +507,23 @@ class _CalculadoraState extends State<Calculadora> {
                 ],
               ),
 
-            if (esCuadrado || esRombo || esPentagono || esHexagono || esOctagono)
+            if (
+                esCuadrado ||
+                esRombo ||
+                esPentagono ||
+                esHexagono ||
+                esOctagono ||
+                esHeptagono ||
+                esNonagono ||
+                esDecagono ||
+                esDodecagono ||
+                (esCubo && calcularVolumen)
+              )
               TextField(
                 controller: ladoController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   labelText: 'Lado',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-
-            if (esRectangulo || esTriangulo || esParalelogramo || esRomboide)
-              TextField(
-                controller: baseController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Base',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-
-            const SizedBox(height:15),
-            if ((esRectangulo || esTriangulo || esTrapecio || esParalelogramo || esRomboide) && calcularArea)
-              TextField(
-                controller: alturaController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Altura',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -631,31 +640,6 @@ class _CalculadoraState extends State<Calculadora> {
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       labelText: 'Lado 2',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ],
-              ),
-
-            const SizedBox(height: 15),
-
-            if (esRomboide && calcularPerimetro)
-              Column(
-                children: [
-                  TextField(
-                    controller: lado1Controller,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Base',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: lado2Controller,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Lado',
                       border: OutlineInputBorder(),
                     ),
                   ),

@@ -42,10 +42,6 @@ class CatalogoFiguras extends StatelessWidget {
       'imagen': 'assets/images/hexagono.jpg'
     },
     {
-      'nombre': 'Romboide',
-      'imagen': 'assets/images/romboide.jpg'
-    },
-    {
       'nombre': 'Elipse',
       'imagen': 'assets/images/elipse.jpg'
     },
@@ -53,6 +49,22 @@ class CatalogoFiguras extends StatelessWidget {
       'nombre': 'Octágono',
       'imagen': 'assets/images/octagono.jpg'
     },
+    {
+      'nombre': 'Heptágono',
+      'imagen': 'assets/images/heptagono.jpg'
+    },
+    {
+      'nombre': 'Nonágono',
+      'imagen': 'assets/images/nonagono.jpg'
+    },
+    {
+      'nombre': 'Decágono',
+      'imagen': 'assets/images/decagono.jpg'
+    },
+    {
+      'nombre': 'Dodecágono',
+      'imagen': 'assets/images/dodecagono.jpg'
+    }
   ];
 
   final cuerposGeometricos = [

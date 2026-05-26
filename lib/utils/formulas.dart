@@ -96,14 +96,6 @@ class Formulas {
   static double calcularVolumenPiramide(double areaBase, double altura) {
     return (areaBase * altura) / 3;
   }
-
-  static double calcularAreaRomboide(double base, double altura){
-    return base * altura;
-  }
-
-  static double calcularPerimetroRomboide(double base, double lado) {
-    return 2 * (base + lado);
-  }
   
   static double calcularAreaElipse(double ejeMayor, double ejeMenor) {
     return 3.14159265359 * ejeMayor * ejeMenor;
@@ -121,5 +113,40 @@ class Formulas {
     return 2 * (1 + sqrt(2)) * lado * lado;
   }
   
-  static double calcularPerimetroOctagono(double lado) => 8 * lado;
+  static double calcularPerimetroOctagono(double lado) {
+    return 8 * lado;
+  }
+
+  static double calcularAreaHeptagono(double lado) {
+    return (7 * lado * lado) / (4 * tan(pi / 7));
+  }
+
+  static double calcularPerimetroHeptagono(double lado) {
+    return 7 * lado;
+  }
+
+  static double calcularAreaNonagono(double lado) {
+    return (9 * lado * lado) / (4 * tan(pi / 9));
+  }
+
+  static double calcularPerimetroNonagono(double lado) {
+    return 9 * lado;
+  }
+
+  static double calcularAreaDecagono(double lado) {
+    return (10 * lado * lado) / (4 * tan(pi / 10));
+  }
+
+  static double calcularPerimetroDecagono(double lado) {
+    return 10 * lado;
+  }
+
+  static double calcularAreaDodecagono(double lado) {
+    return (12 * lado * lado) / (4 * tan(pi / 12));
+  }
+
+  static double calcularPerimetroDodecagono(double lado) {
+    return 12 * lado;
+  }
+
 }
