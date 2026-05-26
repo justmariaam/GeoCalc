@@ -73,6 +73,41 @@ class Formulas {
     return 2 * (lado1 + lado2);
   }
 
+  static double calcularAreaSuperficialCubo(double lado) {
+    return 6 * lado * lado;
+  }
+
+  static double calcularAreaSuperficialEsfera(double radio) {
+    return 4 * pi * radio * radio;
+  }
+
+  static double calcularAreaSuperficialCilindro(double radio, double altura) {
+    double areaBase = pi * radio * radio;
+    double areaLateral = 2 * pi * radio * altura;
+    return 2 * areaBase + areaLateral;
+  }
+
+  static double calcularAreaSuperficialCono(double radio, double altura) {
+    double generatriz = sqrt(radio * radio + altura * altura);
+    double areaBase = pi * radio * radio;
+    double areaLateral = pi * radio * generatriz;
+    return areaBase + areaLateral;
+  }
+
+  static double calcularAreaSuperficialPrisma(double largo, double ancho, double altura) {
+    double areaBase = largo * ancho;
+    double areaLateral = 2 * (largo + ancho) * altura;
+    return 2 * areaBase + areaLateral;
+  }
+
+  static double calcularAreaSuperficialPiramideBaseCuadrada(double ladoBase, double altura) {
+    // Para pirámide de base cuadrada
+    double areaBase = ladoBase * ladoBase;
+    double apotemaLateral = sqrt((ladoBase / 2) * (ladoBase / 2) + altura * altura);
+    double areaLateral = 2 * ladoBase * apotemaLateral;
+    return areaBase + areaLateral;
+  }
+
   static double calcularVolumenCubo(double lado) {
     return lado * lado * lado;
   }
